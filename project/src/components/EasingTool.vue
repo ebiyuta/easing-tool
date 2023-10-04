@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import EasingToolBody from "@/components/EasingToolBody/EasingToolBody.vue";
+import EasingToolBody from '@/components/EasingToolBody/EasingToolBody.vue'
 </script>
 
 <template>
@@ -7,7 +7,7 @@ import EasingToolBody from "@/components/EasingToolBody/EasingToolBody.vue";
     <div class="EasingTool_preview">TODO：上部のアニメーション brプレビュー部分</div>
     <div class="EasingTool_preset">TODO：左側プリセット一覧部分</div>
     <div class="EasingTool_body">
-      <EasingToolBody/>
+      <EasingToolBody />
     </div>
     <div class="EasingTool_slider">TODO：下部のスライダー部分</div>
   </div>
