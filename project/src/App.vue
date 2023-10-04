@@ -5,6 +5,9 @@ import EasingTool from './components/EasingTool.vue'
 <template>
   <main class="main">
     <EasingTool />
+    <h1 class="text-3xl font-bold underline">
+      Hello world!
+    </h1>
   </main>
 </template>
 

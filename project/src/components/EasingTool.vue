@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .easingTool {
   display: grid;
   grid-template:
@@ -18,25 +18,25 @@
     'slider slider' 30px / 80px 1fr;
   width: 260px;
   height: 350px;
-}
 
-.easingTool_preview {
-  grid-area: preview;
-  background-color: red;
-}
+  &_preview {
+    grid-area: preview;
+    background-color: red;
+  }
 
-.easingTool_preset {
-  grid-area: preset;
-  background-color: green;
-}
+  &_preset {
+    grid-area: preset;
+    background-color: green;
+  }
 
-.easingTool_body {
-  grid-area: body;
-  background-color: blue;
-}
+  &_body {
+    grid-area: body;
+    background-color: blue;
+  }
 
-.easingTool_slider {
-  grid-area: slider;
-  background-color: yellow;
+  &_slider {
+    grid-area: slider;
+    background-color: yellow;
+  }
 }
 </style>
