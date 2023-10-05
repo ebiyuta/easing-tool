@@ -1,41 +1,23 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue'
-
-// 始点の座標
-const START_POINT = {
-  x: 10,
-  y: 185
+import { computed, onMounted, ref } from 'vue'
+import { calculateDistance } from '@/utils/calculateDistance'
+import { END_POINT, START_POINT } from '@/consts/Coordinate'
+interface Props {
+  /** 始点ハンドルの座標 */
+  startHandle: { x: number; y: number }
+  /** 終点ハンドルの座標 */
+  endHandle: { x: number; y: number }
 }
-// 終点の座標
-const END_POINT = {
-  x: 137,
-  y: 50
-}
-// 始点ハンドルの座標
-const startHandle = reactive({
-  x: 74,
-  y: 185
-})
-// 終点ハンドルの座標
-const endHandle = reactive({
-  x: 74,
-  y: 50
-})
+const props = defineProps<Props>()
 
+// 始点/終点ハンドルの座標を変更するためのemit
+const emit = defineEmits<{
+  (e: 'changeStartHandle', x: number, y: number): void
+  (e: 'changeEndHandle', x: number, y: number): void
+}>()
+
+// SVGタグのDOM要素
 const wrapperRef = ref<SVGElement | null>(null)
-
-/**
- * 二点間の距離を求める関数です。
- * @param point1
- * @param point2
- * @see https://lab.syncer.jp/Web/JavaScript/Snippet/34/
- */
-const calculateDistance = (point1: { x: number; y: number }, point2: { x: number; y: number }) => {
-  const dx = point2.x - point1.x
-  const dy = point2.y - point1.y
-  const distance = Math.sqrt(dx * dx + dy * dy)
-  return distance
-}
 
 onMounted(() => {
   // svgタグのDOM取得
@@ -81,12 +63,10 @@ onMounted(() => {
 
     if (isNearStart) {
       // 始点ハンドルに計算結果を反映
-      startHandle.x = x.value
-      startHandle.y = y.value
+      emit('changeStartHandle', x.value, y.value)
     } else {
       // 終点ハンドルに計算結果を反映
-      endHandle.x = x.value
-      endHandle.y = y.value
+      emit('changeEndHandle', x.value, y.value)
     }
   }
 
@@ -98,19 +78,23 @@ onMounted(() => {
     currentHandle.x = e.offsetX
     currentHandle.y = e.offsetY
 
-    const startHandleDistance = calculateDistance(currentHandle, startHandle)
-    const endHandleDistance = calculateDistance(currentHandle, endHandle)
+    // クリック位置と始点、終点の距離を比較しどちらが近いかを判定
+    const startHandleDistance = calculateDistance(currentHandle, props.startHandle)
+    const endHandleDistance = calculateDistance(currentHandle, props.endHandle)
     const isNearStart = startHandleDistance < endHandleDistance
+
     if (isNearStart) {
       // クリック開始座標を始点ハンドルに反映
-      startHandle.x = e.offsetX
-      startHandle.y = e.offsetY
+      emit('changeStartHandle', e.offsetX, e.offsetY)
     } else {
       // クリック開始座標を終点ハンドルに反映
-      endHandle.x = e.offsetX
-      endHandle.y = e.offsetY
+      emit('changeEndHandle', e.offsetX, e.offsetY)
     }
 
+    /**
+     * ドラッグ中の処理をまとめたハンドラー
+     * @param e
+     */
     const clickHandler = (e: MouseEvent) => {
       moveHandle(e, isNearStart)
     }
@@ -149,7 +133,7 @@ onMounted(() => {
 
       <!-- イージングの強度を示すベジェ曲線 -->
       <path
-        :d="`M ${START_POINT.x} ${START_POINT.y} C ${startHandle.x} ${startHandle.y}, ${endHandle.x} ${endHandle.y} ${END_POINT.x} ${END_POINT.y}`"
+        :d="`M ${START_POINT.x} ${START_POINT.y} C ${props.startHandle.x} ${props.startHandle.y}, ${props.endHandle.x} ${props.endHandle.y} ${END_POINT.x} ${END_POINT.y}`"
         stroke="black"
         stroke-width="4"
         fill="transparent"
@@ -159,8 +143,8 @@ onMounted(() => {
       <line
         :x1="START_POINT.x"
         :y1="START_POINT.y"
-        :x2="startHandle.x"
-        :y2="startHandle.y"
+        :x2="props.startHandle.x"
+        :y2="props.startHandle.y"
         fill="none"
         stroke="#9034AA"
         stroke-width="2"
@@ -170,17 +154,17 @@ onMounted(() => {
       <line
         :x1="END_POINT.x"
         :y1="END_POINT.y"
-        :x2="endHandle.x"
-        :y2="endHandle.y"
+        :x2="props.endHandle.x"
+        :y2="props.endHandle.y"
         fill="none"
         stroke="#9034AA"
         stroke-width="2"
         opacity="0.8"
       />
       <!-- 始点のハンドル -->
-      <circle :cx="startHandle.x" :cy="startHandle.y" r="8" fill="#9034AA" />
+      <circle :cx="props.startHandle.x" :cy="props.startHandle.y" r="8" fill="#9034AA" />
       <!-- 終点のハンドル -->
-      <circle :cx="endHandle.x" :cy="endHandle.y" r="8" fill="#9034AA" />
+      <circle :cx="props.endHandle.x" :cy="props.endHandle.y" r="8" fill="#9034AA" />
     </svg>
   </div>
 </template>

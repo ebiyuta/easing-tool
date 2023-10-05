@@ -1,5 +1,37 @@
 <script setup lang="ts">
 import EasingToolBody from '@/components/EasingToolBody/EasingToolBody.vue'
+import { reactive } from 'vue'
+
+// 始点ハンドルの座標
+const startHandle = reactive({
+  x: 74,
+  y: 185
+})
+// 終点ハンドルの座標
+const endHandle = reactive({
+  x: 74,
+  y: 50
+})
+
+/**
+ * 始点ハンドルの座標を変更します。
+ * @param x
+ * @param y
+ */
+const changeStartHandle = (x: number, y: number) => {
+  startHandle.x = x
+  startHandle.y = y
+}
+
+/**
+ * 終点ハンドルの座標を変更します。
+ * @param x
+ * @param y
+ */
+const changeEndHandle = (x: number, y: number) => {
+  endHandle.x = x
+  endHandle.y = y
+}
 </script>
 
 <template>
@@ -7,7 +39,12 @@ import EasingToolBody from '@/components/EasingToolBody/EasingToolBody.vue'
     <div class="EasingTool_preview">TODO：上部のアニメーション brプレビュー部分</div>
     <div class="EasingTool_preset">TODO：左側プリセット一覧部分</div>
     <div class="EasingTool_body">
-      <EasingToolBody />
+      <EasingToolBody
+        :startHandle="startHandle"
+        :endHandle="endHandle"
+        @changeStartHandle="changeStartHandle"
+        @changeEndHandle="changeEndHandle"
+      />
     </div>
     <div class="EasingTool_slider">TODO：下部のスライダー部分</div>
   </div>
