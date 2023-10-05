@@ -17,12 +17,25 @@ const startHandle = reactive({
   y: 185
 })
 // 終点ハンドルの座標
-const endHandle = {
+const endHandle = reactive({
   x: 74,
   y: 50
-}
+})
 
 const wrapperRef = ref<SVGElement | null>(null)
+
+/**
+ * 二点間の距離を求める関数です。
+ * @param point1
+ * @param point2
+ * @see https://lab.syncer.jp/Web/JavaScript/Snippet/34/
+ */
+const calculateDistance = (point1: { x: number; y: number }, point2: { x: number; y: number }) => {
+  const dx = point2.x - point1.x
+  const dy = point2.y - point1.y
+  const distance = Math.sqrt(dx * dx + dy * dy)
+  return distance
+}
 
 onMounted(() => {
   // svgタグのDOM取得
@@ -45,7 +58,7 @@ onMounted(() => {
     y: 0
   }
 
-  const moveHandle = (e: MouseEvent) => {
+  const moveHandle = (e: MouseEvent, isNearStart: boolean) => {
     /**
      * ハンドルのX座標を計算します。（現在のハンドル座標 - 移動距離）
      * 移動距離の計算は、クリック開始地点 - 現在のマウス座標。
@@ -66,28 +79,48 @@ onMounted(() => {
      */
     const y = computed(() => currentHandle.y - (clickStartPoint.y - e.clientY))
 
-    // ハンドルに計算結果を反映
-    startHandle.x = x.value
-    startHandle.y = y.value
+    if (isNearStart) {
+      // 始点ハンドルに計算結果を反映
+      startHandle.x = x.value
+      startHandle.y = y.value
+    } else {
+      // 終点ハンドルに計算結果を反映
+      endHandle.x = x.value
+      endHandle.y = y.value
+    }
   }
+
   wrapperDom.onmousedown = (e: MouseEvent) => {
-    // TODO: ハンドルとクリック箇所の座標を比較し、より近いハンドルを握るように
     // クリック開始座標をブラウザ全体を起点に取得
     clickStartPoint.x = e.clientX
     clickStartPoint.y = e.clientY
     // クリック開始座標をSVGタグを起点に取得
-    startHandle.x = e.offsetX
-    startHandle.y = e.offsetY
-    // SVGタグ起点のクリック開始座標をハンドルに反映
-    currentHandle.x = startHandle.x
-    currentHandle.y = startHandle.y
+    currentHandle.x = e.offsetX
+    currentHandle.y = e.offsetY
+
+    const startHandleDistance = calculateDistance(currentHandle, startHandle)
+    const endHandleDistance = calculateDistance(currentHandle, endHandle)
+    const isNearStart = startHandleDistance < endHandleDistance
+    if (isNearStart) {
+      // クリック開始座標を始点ハンドルに反映
+      startHandle.x = e.offsetX
+      startHandle.y = e.offsetY
+    } else {
+      // クリック開始座標を終点ハンドルに反映
+      endHandle.x = e.offsetX
+      endHandle.y = e.offsetY
+    }
+
+    const clickHandler = (e: MouseEvent) => {
+      moveHandle(e, isNearStart)
+    }
 
     // ドラッグ中に行う処理
-    document.addEventListener('mousemove', moveHandle)
+    document.addEventListener('mousemove', clickHandler)
 
     // ドラッグ終了時に行う処理
     document.onmouseup = () => {
-      document.removeEventListener('mousemove', moveHandle)
+      document.removeEventListener('mousemove', clickHandler)
     }
   }
 })
