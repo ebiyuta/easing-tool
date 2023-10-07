@@ -36,15 +36,15 @@ const changeEndHandle = (x: number, y: number) => {
 }
 
 /**
- * 始点/終点ハンドルの座標をCubicBezier形式で一度に変更します。
+ * 始点/終点ハンドルの座標を一度に変更します。
  * @param x1
  * @param y1
  * @param x2
  * @param y2
  */
-const changeHandleCubicBezier = (x1: number, y1: number, x2: number, y2: number) => {
-  changeStartHandle(percentToPointPixel(x1, 'x'), percentToPointPixel(y1, 'y'))
-  changeEndHandle(percentToPointPixel(x2, 'x'), percentToPointPixel(y2, 'y'))
+const changeHandle = (x1: number, y1: number, x2: number, y2: number) => {
+  changeStartHandle(x1, y1)
+  changeEndHandle(x2, y2)
 }
 </script>
 
@@ -52,7 +52,11 @@ const changeHandleCubicBezier = (x1: number, y1: number, x2: number, y2: number)
   <div class="EasingTool">
     <div class="EasingTool_preview">TODO：上部のアニメーション brプレビュー部分</div>
     <div class="EasingTool_preset">
-      <EasingToolPreset @changeHandleCubicBezier="changeHandleCubicBezier" />
+      <EasingToolPreset
+        :startHandle="startHandle"
+        :endHandle="endHandle"
+        @changeHandle="changeHandle"
+      />
     </div>
     <div class="EasingTool_body">
       <EasingToolBody
