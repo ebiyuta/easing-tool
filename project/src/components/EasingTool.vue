@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import EasingToolBody from '@/components/EasingToolBody/EasingToolBody.vue'
+import EasingToolPreset from '@/components/EasingToolPreset/EasingToolPreset.vue'
 import { reactive } from 'vue'
+import { percentToPointPixel } from '@/utils/PercentToPointPixel'
 
 // 始点ハンドルの座標
 const startHandle = reactive({
@@ -32,12 +34,26 @@ const changeEndHandle = (x: number, y: number) => {
   endHandle.x = x
   endHandle.y = y
 }
+
+/**
+ * 始点/終点ハンドルの座標をCubicBezier形式で一度に変更します。
+ * @param x1
+ * @param y1
+ * @param x2
+ * @param y2
+ */
+const changeHandleCubicBezier = (x1: number, y1: number, x2: number, y2: number) => {
+  changeStartHandle(percentToPointPixel(x1, 'x'), percentToPointPixel(y1, 'y'))
+  changeEndHandle(percentToPointPixel(x2, 'x'), percentToPointPixel(y2, 'y'))
+}
 </script>
 
 <template>
   <div class="EasingTool">
     <div class="EasingTool_preview">TODO：上部のアニメーション brプレビュー部分</div>
-    <div class="EasingTool_preset">TODO：左側プリセット一覧部分</div>
+    <div class="EasingTool_preset">
+      <EasingToolPreset @changeHandleCubicBezier="changeHandleCubicBezier" />
+    </div>
     <div class="EasingTool_body">
       <EasingToolBody
         :startHandle="startHandle"
@@ -69,7 +85,6 @@ const changeEndHandle = (x: number, y: number) => {
 
   &_preset {
     grid-area: preset;
-    background-color: green;
   }
 
   &_body {

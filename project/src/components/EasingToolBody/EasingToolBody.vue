@@ -169,7 +169,4 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped lang="scss">
-.EasingToolBody {
-}
-</style>
+<style scoped lang="scss"></style>
