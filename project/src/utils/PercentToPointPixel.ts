@@ -1,7 +1,7 @@
-import { START_POINT } from '@/consts/Coordinate'
+import { END_POINT, START_POINT } from '@/consts/Coordinate'
 
 /**
- * 0.0~1.0で受け取った値を10~137に変換する
+ * 0.0~1.0で受け取った値をピクセル座標に変換する
  * @param percent
  * @param direction
  */
@@ -10,12 +10,12 @@ export const percentToPointPixel = (percent: number, direction: 'x' | 'y') => {
 
   let range
   if (direction === 'x') {
-    range = 137 - 10
+    range = END_POINT.x - START_POINT.x
   } else {
-    range = 50 - 185
+    range = END_POINT.y - START_POINT.y
   }
   const scaledValue = percent * range
-  const result = `${direction === 'x' ? 10 + scaledValue : 185 + scaledValue}`
+  const result = `${direction === 'x' ? START_POINT.x + scaledValue : START_POINT.y + scaledValue}`
 
   return Number(result)
 }

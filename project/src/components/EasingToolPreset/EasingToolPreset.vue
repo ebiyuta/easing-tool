@@ -40,28 +40,28 @@ const easeOut = () => {
 <template>
   <div class="EasingToolPreset flex h-full flex-col justify-between items-center">
     <button
-      class="w-12 h-12 bg-gray-200 rounded hover:bg-gray-300 transition-colors"
+      class="w-12 h-12 bg-gray-200 flex items-center justify-center rounded hover:bg-gray-300 transition-colors"
       @click="changeLinear"
     >
-      /
+      <img class="w-10 h-10" src="@/assets/linear.svg" alt="linear" />
     </button>
     <button
-      class="w-12 h-12 bg-gray-200 rounded hover:bg-gray-300 transition-colors"
+      class="w-12 h-12 bg-gray-200 flex items-center justify-center rounded hover:bg-gray-300 transition-colors"
       @click="changeEaseInOut"
     >
-      /
+      <img class="w-10 h-10" src="@/assets/easeInOut.svg" alt="EaseInOut" />
     </button>
     <button
-      class="w-12 h-12 bg-gray-200 rounded hover:bg-gray-300 transition-colors"
+      class="w-12 h-12 bg-gray-200 flex items-center justify-center rounded hover:bg-gray-300 transition-colors"
       @click="changeFastOutLinearIn"
     >
-      /
+      <img class="w-10 h-10" src="@/assets/fastOutLinearIn.svg" alt="FastOutLinearIn" />
     </button>
     <button
-      class="w-12 h-12 bg-gray-200 rounded hover:bg-gray-300 transition-colors"
+      class="w-12 h-12 bg-gray-200 flex items-center justify-center rounded hover:bg-gray-300 transition-colors"
       @click="easeOut"
     >
-      /
+      <img class="w-10 h-10" src="@/assets/easeOut.svg" alt="easeOut" />
     </button>
   </div>
 </template>
