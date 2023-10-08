@@ -118,7 +118,7 @@ const nextSlide = () => {
 </script>
 
 <template>
-  <div class="EasingToolSlider flex justify-between p-4">
+  <div class="EasingToolSlider flex justify-between p-4 select-none">
     <button
       v-show="currentPreset"
       @click="prevSlide"

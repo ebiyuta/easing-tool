@@ -2,6 +2,7 @@
 import EasingToolBody from '@/components/EasingToolBody/EasingToolBody.vue'
 import EasingToolPreset from '@/components/EasingToolPreset/EasingToolPreset.vue'
 import EasingToolSlider from '@/components/EasingToolSlider/EasingToolSlider.vue'
+import EasingToolPreview from '@/components/EasingToolPreview/EasingToolPreview.vue'
 import { reactive } from 'vue'
 
 // 始点ハンドルの座標
@@ -50,7 +51,9 @@ const changeHandle = (x1: number, y1: number, x2: number, y2: number) => {
 
 <template>
   <div class="EasingTool">
-    <div class="EasingTool_preview">TODO：上部のアニメーション brプレビュー部分</div>
+    <div class="EasingTool_preview">
+      <EasingToolPreview :startHandle="startHandle" :endHandle="endHandle" />
+    </div>
     <div class="EasingTool_preset">
       <EasingToolPreset
         :startHandle="startHandle"
@@ -86,11 +89,10 @@ const changeHandle = (x1: number, y1: number, x2: number, y2: number) => {
   width: 270px;
   height: 350px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
 
   &_preview {
     grid-area: preview;
-    word-break: break-all;
-    background-color: red;
   }
 
   &_preset {

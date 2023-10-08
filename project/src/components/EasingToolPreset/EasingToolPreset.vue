@@ -91,7 +91,7 @@ const easeOut = () => {
 </script>
 
 <template>
-  <div class="EasingToolPreset flex h-full flex-col justify-between pl-4">
+  <div class="EasingToolPreset flex h-full flex-col justify-between pl-4 select-none">
     <button
       :class="`w-12 h-12 flex items-center justify-center rounded transition-colors ${
         currentPreset && currentPreset.category === 'linear'
