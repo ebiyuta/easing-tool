@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import EasingToolBody from '@/components/EasingToolBody/EasingToolBody.vue'
 import EasingToolPreset from '@/components/EasingToolPreset/EasingToolPreset.vue'
+import EasingToolSlider from '@/components/EasingToolSlider/EasingToolSlider.vue'
 import { reactive } from 'vue'
-import { percentToPointPixel } from '@/utils/PercentToPointPixel'
 
 // 始点ハンドルの座標
 const startHandle = reactive({
@@ -37,10 +37,10 @@ const changeEndHandle = (x: number, y: number) => {
 
 /**
  * 始点/終点ハンドルの座標を一度に変更します。
- * @param x1
- * @param y1
- * @param x2
- * @param y2
+ * @param x1 始点ハンドルのx座標
+ * @param y1 始点ハンドルのy座標
+ * @param x2 終点ハンドルのx座標
+ * @param y2　終点ハンドルのy座標
  */
 const changeHandle = (x1: number, y1: number, x2: number, y2: number) => {
   changeStartHandle(x1, y1)
@@ -66,7 +66,13 @@ const changeHandle = (x1: number, y1: number, x2: number, y2: number) => {
         @changeEndHandle="changeEndHandle"
       />
     </div>
-    <div class="EasingTool_slider">TODO：下部のスライダー部分</div>
+    <div class="EasingTool_slider">
+      <EasingToolSlider
+        :startHandle="startHandle"
+        :endHandle="endHandle"
+        @changeHandle="changeHandle"
+      />
+    </div>
   </div>
 </template>
 
@@ -97,7 +103,6 @@ const changeHandle = (x1: number, y1: number, x2: number, y2: number) => {
 
   &_slider {
     grid-area: slider;
-    background-color: yellow;
   }
 }
 </style>

@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./src/**/*.{vue,html,js}"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'arrow': "url('/src/assets/arrow.svg')",
+      }
+    },
   },
   plugins: [],
 }

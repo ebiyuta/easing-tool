@@ -83,10 +83,10 @@ const easeOut = () => {
 </script>
 
 <template>
-  <div class="EasingToolPreset flex h-full flex-col justify-between items-center">
+  <div class="EasingToolPreset flex h-full flex-col justify-between pl-4">
     <button
-      :class="`w-12 h-12 bg-gray-200 flex items-center justify-center rounded transition-colors ${
-        currentPreset === 'linear' ? 'bg-blue-500' : 'hover:bg-gray-300'
+      :class="`w-12 h-12 flex items-center justify-center rounded transition-colors ${
+        currentPreset === 'linear' ? 'bg-blue-500' : 'hover:bg-gray-300 bg-gray-200'
       }`"
       @click="changeLinear"
     >
@@ -97,8 +97,8 @@ const easeOut = () => {
       />
     </button>
     <button
-      :class="`w-12 h-12 bg-gray-200 flex items-center justify-center rounded transition-colors ${
-        currentPreset === 'ease-in-out' ? 'bg-blue-500' : 'hover:bg-gray-300'
+      :class="`w-12 h-12 flex items-center justify-center rounded transition-colors ${
+        currentPreset === 'ease-in-out' ? 'bg-blue-500' : 'hover:bg-gray-300 bg-gray-200'
       }`"
       @click="changeEaseInOut"
     >
@@ -109,8 +109,8 @@ const easeOut = () => {
       />
     </button>
     <button
-      :class="`w-12 h-12 bg-gray-200 flex items-center justify-center rounded transition-colors ${
-        currentPreset === 'fast-out-linear-in' ? 'bg-blue-500' : 'hover:bg-gray-300'
+      :class="`w-12 h-12 flex items-center justify-center rounded transition-colors ${
+        currentPreset === 'fast-out-linear-in' ? 'bg-blue-500' : 'hover:bg-gray-300 bg-gray-200'
       }`"
       @click="changeFastOutLinearIn"
     >
@@ -121,8 +121,8 @@ const easeOut = () => {
       />
     </button>
     <button
-      :class="`w-12 h-12 bg-gray-200 flex items-center justify-center rounded transition-colors ${
-        currentPreset === 'ease-out' ? 'bg-blue-500' : 'hover:bg-gray-300'
+      :class="`w-12 h-12 flex items-center justify-center rounded transition-colors ${
+        currentPreset === 'ease-out' ? 'bg-blue-500' : 'hover:bg-gray-300 bg-gray-200'
       }`"
       @click="easeOut"
     >
