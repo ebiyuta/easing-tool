@@ -40,26 +40,6 @@ const cubicBezier = computed(() => {
 
 const easeOutList = [
   {
-    id: 'ease-out',
-    displayName: 'ease-out'
-  },
-  {
-    id: 'out-sine',
-    displayName: 'Out · Sine'
-  },
-  {
-    id: 'out-quadratic',
-    displayName: 'Out · Quadratic'
-  },
-  {
-    id: 'out-cubic',
-    displayName: 'Out · Cubic'
-  },
-  {
-    id: 'linear-out-slow-in',
-    displayName: 'Linear Out, Slow In'
-  },
-  {
     id: 'out-back',
     displayName: 'Out · Back'
   }

@@ -184,3 +184,69 @@ export const EASE_OUT_END_POINT = {
   x: percentToPointPixel(0.58, 'x'),
   y: percentToPointPixel(1, 'y')
 }
+
+/**
+ * ベジェ曲線がOut · Sineの時の座標
+ * 0.61, 1, 0.88, 1
+ */
+export const OUT_SINE_START_POINT = {
+  x: percentToPointPixel(0.61, 'x'),
+  y: percentToPointPixel(1, 'y')
+}
+export const OUT_SINE_END_POINT = {
+  x: percentToPointPixel(0.88, 'x'),
+  y: percentToPointPixel(1, 'y')
+}
+
+/**
+ * ベジェ曲線がOut · Quadraticの時の座標
+ * 0.5, 1, 0.89, 1
+ */
+export const OUT_QUADRATIC_START_POINT = {
+  x: percentToPointPixel(0.5, 'x'),
+  y: percentToPointPixel(1, 'y')
+}
+export const OUT_QUADRATIC_END_POINT = {
+  x: percentToPointPixel(0.89, 'x'),
+  y: percentToPointPixel(1, 'y')
+}
+
+/**
+ * ベジェ曲線がOut · Cubicの時の座標
+ * 0.33, 1, 0.68, 1
+ */
+export const OUT_CUBIC_START_POINT = {
+  x: percentToPointPixel(0.33, 'x'),
+  y: percentToPointPixel(1, 'y')
+}
+export const OUT_CUBIC_END_POINT = {
+  x: percentToPointPixel(0.68, 'x'),
+  y: percentToPointPixel(1, 'y')
+}
+
+/**
+ * ベジェ曲線がLinear Out, Slow Inの時の座標
+ * 0, 0, 0.68, 1
+ * TODO: こちらは一般的に使われている用語ではないので、感覚で合わせています
+ */
+export const LINEAR_OUT_SLOW_IN_START_POINT = {
+  x: percentToPointPixel(0, 'x'),
+  y: percentToPointPixel(0, 'y')
+}
+export const LINEAR_OUT_SLOW_IN_END_POINT = {
+  x: percentToPointPixel(0.18, 'x'),
+  y: percentToPointPixel(1, 'y')
+}
+
+/**
+ * ベジェ曲線がOut · Backの時の座標
+ * 0.34, 1.56, 0.64, 1
+ */
+export const OUT_BACK_START_POINT = {
+  x: percentToPointPixel(0.34, 'x'),
+  y: percentToPointPixel(1.56, 'y')
+}
+export const OUT_BACK_END_POINT = {
+  x: percentToPointPixel(0.64, 'x'),
+  y: percentToPointPixel(1, 'y')
+}

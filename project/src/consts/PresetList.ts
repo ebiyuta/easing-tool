@@ -26,7 +26,17 @@ import {
   IN_OUT_SINE_END_POINT,
   IN_OUT_SINE_START_POINT,
   LINEAR_END_POINT,
-  LINEAR_START_POINT
+  LINEAR_OUT_SLOW_IN_END_POINT,
+  LINEAR_OUT_SLOW_IN_START_POINT,
+  LINEAR_START_POINT,
+  OUT_BACK_END_POINT,
+  OUT_BACK_START_POINT,
+  OUT_CUBIC_END_POINT,
+  OUT_CUBIC_START_POINT,
+  OUT_QUADRATIC_END_POINT,
+  OUT_QUADRATIC_START_POINT,
+  OUT_SINE_END_POINT,
+  OUT_SINE_START_POINT
 } from '@/consts/EasingPreset'
 
 /**
@@ -135,5 +145,40 @@ export const PresetList = [
     displayName: 'ease-out',
     startHandle: EASE_OUT_START_POINT,
     endHandle: EASE_OUT_END_POINT
+  },
+  {
+    id: 'out-sine',
+    category: 'ease-out',
+    displayName: 'Out · Sine',
+    startHandle: OUT_SINE_START_POINT,
+    endHandle: OUT_SINE_END_POINT
+  },
+  {
+    id: 'out-quadratic',
+    category: 'ease-out',
+    displayName: 'Out · Quadratic',
+    startHandle: OUT_QUADRATIC_START_POINT,
+    endHandle: OUT_QUADRATIC_END_POINT
+  },
+  {
+    id: 'out-cubic',
+    category: 'ease-out',
+    displayName: 'Out · Cubic',
+    startHandle: OUT_CUBIC_START_POINT,
+    endHandle: OUT_CUBIC_END_POINT
+  },
+  {
+    id: 'linear-out-slow-in',
+    category: 'ease-out',
+    displayName: 'Linear Out, Slow In',
+    startHandle: LINEAR_OUT_SLOW_IN_START_POINT,
+    endHandle: LINEAR_OUT_SLOW_IN_END_POINT
+  },
+  {
+    id: 'out-back',
+    category: 'ease-out',
+    displayName: 'Out · Back',
+    startHandle: OUT_BACK_START_POINT,
+    endHandle: OUT_BACK_END_POINT
   }
 ]
