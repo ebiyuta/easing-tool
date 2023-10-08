@@ -16,18 +16,18 @@ const emit = defineEmits<{
   (e: 'changeHandle', x1: number, y1: number, x2: number, y2: number): void
 }>()
 
-const currentPreset = computed(() => {
-  const currentPreset = PresetList.find(
+// 親から受け取った座標と完全に一致するプリセットをプリセットリストから見つける
+const currentPreset = computed(() =>
+  PresetList.find(
     (item) =>
       item.startHandle.x === props.startHandle.x &&
       item.startHandle.y === props.startHandle.y &&
       item.endHandle.x === props.endHandle.x &&
       item.endHandle.y === props.endHandle.y
   )
+)
 
-  return currentPreset
-})
-
+// 親から受け取った座標をcubicBezier形式に変換
 const cubicBezier = computed(() => {
   return `cubic-bezier(${PointPixelToPercent(props.startHandle.x, 'x')}, ${PointPixelToPercent(
     props.startHandle.y,
@@ -38,13 +38,7 @@ const cubicBezier = computed(() => {
   )})`
 })
 
-const easeOutList = [
-  {
-    id: 'out-back',
-    displayName: 'Out · Back'
-  }
-]
-
+// スライダーの状態管理
 const currentSlideList = ref([
   {
     category: 'linear',
@@ -64,6 +58,10 @@ const currentSlideList = ref([
   }
 ])
 
+/**
+ * スライダーの前へ/次へボタンが押された時の処理
+ * @param version
+ */
 const changeSlide = (version: 'next' | 'prev') => {
   const currentCategoryPresetList = PresetList.filter(
     (item) => item.category === currentPreset.value.category

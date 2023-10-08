@@ -35,6 +35,8 @@ const emit = defineEmits<{
   (e: 'changeHandle', x1: number, y1: number, x2: number, y2: number): void
 }>()
 
+// TODO: EasingToolSliderが正しく動作していないので、以下の処理について要検討。
+
 /**
  * linearをハンドルに反映する処理
  */
