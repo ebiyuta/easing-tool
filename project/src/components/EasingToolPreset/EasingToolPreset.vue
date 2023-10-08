@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import {
+  EASE_IN_END_POINT,
   EASE_IN_OUT_END_POINT,
   EASE_IN_OUT_START_POINT,
+  EASE_IN_START_POINT,
   EASE_OUT_END_POINT,
   EASE_OUT_START_POINT,
-  FAST_OUT_LINEAR_IN_END_POINT,
-  FAST_OUT_LINEAR_IN_START_POINT,
   LINEAR_END_POINT,
   LINEAR_START_POINT
 } from '@/consts/EasingPreset'
@@ -62,15 +62,15 @@ const changeEaseInOut = () => {
 }
 
 /**
- * fast-out-linear-inをハンドルに反映する処理
+ * ease-inをハンドルに反映する処理
  */
-const changeFastOutLinearIn = () => {
+const changeEaseIn = () => {
   emit(
     'changeHandle',
-    FAST_OUT_LINEAR_IN_START_POINT.x,
-    FAST_OUT_LINEAR_IN_START_POINT.y,
-    FAST_OUT_LINEAR_IN_END_POINT.x,
-    FAST_OUT_LINEAR_IN_END_POINT.y
+    EASE_IN_START_POINT.x,
+    EASE_IN_START_POINT.y,
+    EASE_IN_END_POINT.x,
+    EASE_IN_END_POINT.y
   )
 }
 
@@ -124,15 +124,15 @@ const easeOut = () => {
     </button>
     <button
       :class="`w-12 h-12 flex items-center justify-center rounded transition-colors ${
-        currentPreset && currentPreset.category === 'fast-out-linear-in'
+        currentPreset && currentPreset.category === 'ease-in'
           ? 'bg-blue-500'
           : 'hover:bg-gray-300 bg-gray-200'
       }`"
-      @click="changeFastOutLinearIn"
+      @click="changeEaseIn"
     >
       <img
         :class="`w-10 h-10 ${
-          currentPreset && currentPreset.category === 'fast-out-linear-in' && 'brightness-0 invert'
+          currentPreset && currentPreset.category === 'ease-in' && 'brightness-0 invert'
         }`"
         src="@/assets/fastOutLinearIn.svg"
         alt="FastOutLinearIn"

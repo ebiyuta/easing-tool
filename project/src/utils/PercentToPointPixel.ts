@@ -6,8 +6,6 @@ import { END_POINT, START_POINT } from '@/consts/Coordinate'
  * @param direction
  */
 export const percentToPointPixel = (percent: number, direction: 'x' | 'y') => {
-  percent = Math.min(Math.max(percent, 0.0), 1.0)
-
   let range
   if (direction === 'x') {
     range = END_POINT.x - START_POINT.x
