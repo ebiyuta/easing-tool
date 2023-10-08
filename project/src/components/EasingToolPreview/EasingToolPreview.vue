@@ -48,8 +48,53 @@ watch(cubicBezier, () => {
         isAnimating ? 'duration-1000 translate-x-[218px]' : 'translate-x-0'
       }`"
       :style="{ transitionTimingFunction: cubicBezier }"
-    ></div>
+    />
+    <div
+      :class="`EasingToolPreview_afterimage ${isAnimating ? 'isAnimating' : ''}`"
+      :style="{ transitionTimingFunction: cubicBezier }"
+    >
+      <div
+        class="opacity-10 w-5 h-5 bg-[#9034AA] rounded-full"
+        :style="{ animationTimingFunction: cubicBezier }"
+        v-for="n in 20"
+        :key="n"
+      />
+    </div>
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@keyframes anim {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(218px);
+  }
+}
+
+.EasingToolPreview {
+  &_afterimage {
+    position: relative;
+    width: 0;
+    top: -20px;
+    height: 20px;
+    overflow: hidden;
+    &.isAnimating {
+      transition: width 1s;
+      width: 240px;
+    }
+
+    > div {
+      position: absolute;
+      @for $i from 1 through 20 {
+        &:nth-of-type(#{$i}) {
+          animation: anim 1s;
+          animation-delay: #{-$i / 20}s;
+          animation-play-state: paused;
+        }
+      }
+    }
+  }
+}
+</style>
