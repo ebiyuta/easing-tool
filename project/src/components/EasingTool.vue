@@ -3,7 +3,7 @@ import EasingToolBody from '@/components/EasingToolBody/EasingToolBody.vue'
 import EasingToolPreset from '@/components/EasingToolPreset/EasingToolPreset.vue'
 import EasingToolSlider from '@/components/EasingToolSlider/EasingToolSlider.vue'
 import EasingToolPreview from '@/components/EasingToolPreview/EasingToolPreview.vue'
-import { reactive } from 'vue'
+import { onMounted, reactive } from 'vue'
 
 // 始点ハンドルの座標
 const startHandle = reactive({
@@ -13,7 +13,7 @@ const startHandle = reactive({
 // 終点ハンドルの座標
 const endHandle = reactive({
   x: 74,
-  y: 50
+  y: 51
 })
 
 /**
@@ -47,6 +47,10 @@ const changeHandle = (x1: number, y1: number, x2: number, y2: number) => {
   changeStartHandle(x1, y1)
   changeEndHandle(x2, y2)
 }
+
+onMounted(() => {
+  changeHandle(74, 185, 74, 50)
+})
 </script>
 
 <template>
@@ -90,6 +94,8 @@ const changeHandle = (x1: number, y1: number, x2: number, y2: number) => {
   height: 350px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   overflow: hidden;
+  background-image: url(../assets/bg.png);
+  border-radius: 4px;
 
   &_preview {
     grid-area: preview;
