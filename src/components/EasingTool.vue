@@ -18,15 +18,13 @@ const endHandle = reactive({
   y: 51
 })
 // 完全に一致する完全に一致するプリセットをプリセットリストから見つけるをプリセットリストから見つける
-const currentPreset = reactive(
-  computed<currentPresetType | undefined>(() =>
-    PresetList.find(
-      (item) =>
-        item.startHandle.x === startHandle.x &&
-        item.startHandle.y === startHandle.y &&
-        item.endHandle.x === endHandle.x &&
-        item.endHandle.y === endHandle.y
-    )
+const currentPreset = computed<currentPresetType | undefined>(() =>
+  PresetList.find(
+    (item) =>
+      item.startHandle.x === startHandle.x &&
+      item.startHandle.y === startHandle.y &&
+      item.endHandle.x === endHandle.x &&
+      item.endHandle.y === endHandle.y
   )
 )
 // スライダーの状態管理
