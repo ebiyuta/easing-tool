@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { PointPixelToPercent } from '@/utils/PointPixelToPercent'
 import { PresetList } from '@/consts/PresetList'
+import { LINEAR_END_POINT, LINEAR_START_POINT } from '@/consts/EasingPreset'
 
 interface Props {
   /** 始点ハンドルの座標 */
@@ -11,13 +12,27 @@ interface Props {
 }
 const props = defineProps<Props>()
 
+interface currentPresetType {
+  id: string
+  category: string
+  displayName: string
+  startHandle: {
+    x: number
+    y: number
+  }
+  endHandle: {
+    x: number
+    y: number
+  }
+}
+
 // 始点/終点ハンドルの座標を変更するためのemit
 const emit = defineEmits<{
   (e: 'changeHandle', x1: number, y1: number, x2: number, y2: number): void
 }>()
 
 // 親から受け取った座標と完全に一致するプリセットをプリセットリストから見つける
-const currentPreset = computed(() =>
+const currentPreset = computed<currentPresetType | undefined>(() =>
   PresetList.find(
     (item) =>
       item.startHandle.x === props.startHandle.x &&
@@ -62,13 +77,17 @@ const currentSlideList = ref([
  * スライダーの前へ/次へボタンが押された時の処理
  * @param version
  */
-const changeSlide = (version: 'next' | 'prev') => {
+const changeSlide = (version: 'next' | 'prev', currentPreset: currentPresetType | undefined) => {
+  if (!currentPreset) {
+    // 型ガード
+    return
+  }
   const currentCategoryPresetList = PresetList.filter(
-    (item) => item.category === currentPreset.value.category
+    (item) => item.category === currentPreset.category
   )
 
   currentSlideList.value = currentSlideList.value.map((slide) => {
-    if (slide.category === currentPreset.value.category) {
+    if (slide.category === currentPreset.category) {
       if (version === 'next') {
         return {
           category: slide.category,
@@ -89,8 +108,11 @@ const changeSlide = (version: 'next' | 'prev') => {
   })
 
   const currentCategoryIndex = currentSlideList.value.find(
-    (slide) => slide.category === currentPreset.value.category
+    (slide) => slide.category === currentPreset.category
   )?.index
+  if (currentCategoryIndex === undefined) {
+    return
+  }
   const currentSlide = currentCategoryPresetList[currentCategoryIndex]
 
   emit(
@@ -106,14 +128,14 @@ const changeSlide = (version: 'next' | 'prev') => {
  * 前へボタンが押下された時の処理
  */
 const prevSlide = () => {
-  changeSlide('prev')
+  changeSlide('prev', currentPreset.value)
 }
 
 /**
  * 次へボタンが押下された時の処理
  */
 const nextSlide = () => {
-  changeSlide('next')
+  changeSlide('next', currentPreset.value)
 }
 </script>
 

@@ -26,8 +26,8 @@ const cubicBezier = computed(() => {
 })
 
 // タイムアウトのIDを保持する変数
-let timeoutId = null
-let timeoutId2 = null
+let timeoutId: number | null = null
+let timeoutId2: number | null = null
 
 watch(cubicBezier, () => {
   isAnimating.value = false

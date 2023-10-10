@@ -12,9 +12,9 @@ export const PointPixelToPercent = (pixel: number, direction: 'x' | 'y') => {
   } else {
     range = END_POINT.y - START_POINT.y
   }
-  const scaledValue = `${
-    direction === 'x' ? (pixel - START_POINT.x) / range : (pixel - START_POINT.y) / range
-  }`
+  const scaledValue = Number(
+    `${direction === 'x' ? (pixel - START_POINT.x) / range : (pixel - START_POINT.y) / range}`
+  )
 
   return Math.floor(scaledValue * 100) / 100
 }
