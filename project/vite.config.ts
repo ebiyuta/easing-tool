@@ -7,7 +7,7 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   build: {
     outDir: '../docs',
-    assetsDir: 'easing-tool',
+    assetsDir: 'easing-tool/assets',
   },
   plugins: [
     vue(),
