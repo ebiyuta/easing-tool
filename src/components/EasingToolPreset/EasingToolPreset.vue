@@ -1,15 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import {
-  EASE_IN_END_POINT,
-  EASE_IN_OUT_END_POINT,
-  EASE_IN_OUT_START_POINT,
-  EASE_IN_START_POINT,
-  EASE_OUT_END_POINT,
-  EASE_OUT_START_POINT,
-  LINEAR_END_POINT,
-  LINEAR_START_POINT
-} from '@/consts/EasingPreset'
+import type { currentPresetType } from '@/types/currentPresetType'
 import { PresetList } from '@/consts/PresetList'
 
 interface Props {
@@ -17,36 +7,49 @@ interface Props {
   startHandle: { x: number; y: number }
   /** 終点ハンドルの座標 */
   endHandle: { x: number; y: number }
+  /** 現在のプリセット */
+  currentPreset: currentPresetType | undefined
+  /** スライダーの状態 */
+  currentSlideList: { category: string; index: number }[]
 }
 const props = defineProps<Props>()
-
-const currentPreset = computed(() => {
-  return PresetList.find(
-    (item) =>
-      item.startHandle.x === props.startHandle.x &&
-      item.startHandle.y === props.startHandle.y &&
-      item.endHandle.x === props.endHandle.x &&
-      item.endHandle.y === props.endHandle.y
-  )
-})
 
 // 始点/終点ハンドルの座標を変更するためのemit
 const emit = defineEmits<{
   (e: 'changeHandle', x1: number, y1: number, x2: number, y2: number): void
 }>()
 
-// TODO: EasingToolSliderが正しく動作していないので、以下の処理について要検討。
+/**
+ * スライダーの状況とクリックしたカテゴリーを照らし合わせ、適切なプリセットを呼び出す
+ * @param category
+ */
+const currentPreset = (category: string) => {
+  // スライダーの状態から、現在のインデックスを取得
+  const currentIndex = props.currentSlideList.find((item) => item.category === category)?.index
+  if (currentIndex === undefined) {
+    // 型ガード
+    return
+  }
+  // プリセット一覧から、現在のベジェ曲線に対応するカテゴリーのみを絞り込み
+  const currentCategoryPresetList = PresetList.filter((item) => item.category === category)
+  return currentCategoryPresetList[currentIndex]
+}
 
 /**
  * linearをハンドルに反映する処理
  */
 const changeLinear = () => {
+  const current = currentPreset('linear')
+  if (!current) {
+    return
+  }
+
   emit(
     'changeHandle',
-    LINEAR_START_POINT.x,
-    LINEAR_START_POINT.y,
-    LINEAR_END_POINT.x,
-    LINEAR_END_POINT.y
+    current.startHandle.x,
+    current.startHandle.y,
+    current.endHandle.x,
+    current.endHandle.y
   )
 }
 
@@ -54,12 +57,17 @@ const changeLinear = () => {
  * ease-in-outをハンドルに反映する処理
  */
 const changeEaseInOut = () => {
+  const current = currentPreset('ease-in-out')
+  if (!current) {
+    return
+  }
+
   emit(
     'changeHandle',
-    EASE_IN_OUT_START_POINT.x,
-    EASE_IN_OUT_START_POINT.y,
-    EASE_IN_OUT_END_POINT.x,
-    EASE_IN_OUT_END_POINT.y
+    current.startHandle.x,
+    current.startHandle.y,
+    current.endHandle.x,
+    current.endHandle.y
   )
 }
 
@@ -67,12 +75,17 @@ const changeEaseInOut = () => {
  * ease-inをハンドルに反映する処理
  */
 const changeEaseIn = () => {
+  const current = currentPreset('ease-in')
+  if (!current) {
+    return
+  }
+
   emit(
     'changeHandle',
-    EASE_IN_START_POINT.x,
-    EASE_IN_START_POINT.y,
-    EASE_IN_END_POINT.x,
-    EASE_IN_END_POINT.y
+    current.startHandle.x,
+    current.startHandle.y,
+    current.endHandle.x,
+    current.endHandle.y
   )
 }
 
@@ -80,12 +93,17 @@ const changeEaseIn = () => {
  * ease-outをハンドルに反映する処理
  */
 const easeOut = () => {
+  const current = currentPreset('ease-out')
+  if (!current) {
+    return
+  }
+
   emit(
     'changeHandle',
-    EASE_OUT_START_POINT.x,
-    EASE_OUT_START_POINT.y,
-    EASE_OUT_END_POINT.x,
-    EASE_OUT_END_POINT.y
+    current.startHandle.x,
+    current.startHandle.y,
+    current.endHandle.x,
+    current.endHandle.y
   )
 }
 </script>
@@ -94,7 +112,7 @@ const easeOut = () => {
   <div class="EasingToolPreset flex h-full flex-col justify-between pl-4 select-none">
     <button
       :class="`w-12 h-12 flex items-center justify-center rounded transition-colors ${
-        currentPreset && currentPreset.category === 'linear'
+        props.currentPreset && props.currentPreset.category === 'linear'
           ? 'bg-blue-500'
           : 'hover:bg-gray-300 bg-gray-200'
       }`"
@@ -102,7 +120,7 @@ const easeOut = () => {
     >
       <img
         :class="`w-10 h-10 ${
-          currentPreset && currentPreset.category === 'linear' && 'brightness-0 invert'
+          props.currentPreset && props.currentPreset.category === 'linear' && 'brightness-0 invert'
         }`"
         src="@/assets/linear.svg"
         alt="linear"
@@ -110,7 +128,7 @@ const easeOut = () => {
     </button>
     <button
       :class="`w-12 h-12 flex items-center justify-center rounded transition-colors ${
-        currentPreset && currentPreset.category === 'ease-in-out'
+        props.currentPreset && props.currentPreset.category === 'ease-in-out'
           ? 'bg-blue-500'
           : 'hover:bg-gray-300 bg-gray-200'
       }`"
@@ -118,7 +136,9 @@ const easeOut = () => {
     >
       <img
         :class="`w-10 h-10 ${
-          currentPreset && currentPreset.category === 'ease-in-out' && 'brightness-0 invert'
+          props.currentPreset &&
+          props.currentPreset.category === 'ease-in-out' &&
+          'brightness-0 invert'
         }`"
         src="@/assets/easeInOut.svg"
         alt="EaseInOut"
@@ -126,7 +146,7 @@ const easeOut = () => {
     </button>
     <button
       :class="`w-12 h-12 flex items-center justify-center rounded transition-colors ${
-        currentPreset && currentPreset.category === 'ease-in'
+        props.currentPreset && props.currentPreset.category === 'ease-in'
           ? 'bg-blue-500'
           : 'hover:bg-gray-300 bg-gray-200'
       }`"
@@ -134,7 +154,7 @@ const easeOut = () => {
     >
       <img
         :class="`w-10 h-10 ${
-          currentPreset && currentPreset.category === 'ease-in' && 'brightness-0 invert'
+          props.currentPreset && props.currentPreset.category === 'ease-in' && 'brightness-0 invert'
         }`"
         src="@/assets/fastOutLinearIn.svg"
         alt="FastOutLinearIn"
@@ -142,7 +162,7 @@ const easeOut = () => {
     </button>
     <button
       :class="`w-12 h-12 flex items-center justify-center rounded transition-colors ${
-        currentPreset && currentPreset.category === 'ease-out'
+        props.currentPreset && props.currentPreset.category === 'ease-out'
           ? 'bg-blue-500'
           : 'hover:bg-gray-300 bg-gray-200'
       }`"
@@ -150,7 +170,9 @@ const easeOut = () => {
     >
       <img
         :class="`w-10 h-10 ${
-          currentPreset && currentPreset.category === 'ease-out' && 'brightness-0 invert'
+          props.currentPreset &&
+          props.currentPreset.category === 'ease-out' &&
+          'brightness-0 invert'
         }`"
         src="@/assets/easeOut.svg"
         alt="easeOut"

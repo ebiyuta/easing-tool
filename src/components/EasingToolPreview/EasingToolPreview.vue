@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch, watchEffect } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { PointPixelToPercent } from '@/utils/PointPixelToPercent'
 
 interface Props {
