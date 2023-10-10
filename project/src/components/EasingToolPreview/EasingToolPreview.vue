@@ -74,6 +74,8 @@ watch(cubicBezier, () => {
 </template>
 
 <style scoped lang="scss">
+@use 'sass:math';
+
 @keyframes anim {
   0% {
     transform: translateX(0);
@@ -103,7 +105,7 @@ watch(cubicBezier, () => {
       @for $i from 1 through 20 {
         &:nth-of-type(#{$i}) {
           animation: anim 1s;
-          animation-delay: #{-$i / 20}s;
+          animation-delay: math.div($i, 20) * -1s;
           animation-play-state: paused;
         }
       }
