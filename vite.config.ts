@@ -5,9 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  build: {
-    base: "easing-tool",
-  },
+  base: "easing-tool",
   plugins: [
     vue(),
   ],
